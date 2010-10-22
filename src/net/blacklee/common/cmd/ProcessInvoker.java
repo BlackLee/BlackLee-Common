@@ -13,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runners.Suite.SuiteClasses;
 
+import net.blacklee.common.io.OSUtils;
 import net.blacklee.common.string.MyStringUtils;
 
 /**
@@ -60,7 +61,12 @@ public class ProcessInvoker {
 	public void testInvode () {
 		try {
 			String str = "abcde";
-			ProcessExecuteResult result = invoke(null, "cmd", "/C", "echo", str);
+			ProcessExecuteResult result;
+			if (OSUtils.isWindows()) {
+				result = invoke(null, "cmd", "/C", "echo", str);
+			} else {
+				result = invoke(null, "echo", str);
+			}
 			Assert.assertEquals(str, result.getStandardOutput().trim());
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -38,6 +38,7 @@ public class UrlUtils {
 		} else if (url.startsWith("..")) {
 			while (url.startsWith("..")) {
 				url = url.substring(3);
+				if (currentAddr.endsWith("/")) currentAddr = currentAddr.replaceFirst("/$", "");
 				currentAddr = currentAddr.substring(0, currentAddr.lastIndexOf('/') + 1);
 			}
 			url = currentAddr + url;
@@ -53,6 +54,7 @@ public class UrlUtils {
 		String expected = "http://blog.blacklee.net/tech/page/2";
 		String currentAddr = "http://blog.blacklee.net/tech/page/1";
 		assertEquals(expected, getHttpRealLink(currentAddr, "../2"));
+		assertEquals("http://blog.blacklee.net/misc", getHttpRealLink(currentAddr, "../../../misc"));
 		assertEquals(expected, getHttpRealLink(currentAddr, "2"));
 		assertEquals(expected, getHttpRealLink(currentAddr, "/tech/page/2"));
 		assertEquals(expected, getHttpRealLink(currentAddr, "http://blog.blacklee.net/tech/page/2"));
