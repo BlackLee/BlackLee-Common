@@ -19,6 +19,11 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses(value = {})
 public class HttpGetter {
 	private static final List<Integer> noBodyStatus = Arrays.asList(301, 302);
+	/**
+	 * get target url html content
+	 * @param url target url
+	 * @return html content
+	 */
 	public static String getHtml(String url) {
 		GetMethod getter = new GetMethod(url);
 		getter.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2");
@@ -45,15 +50,19 @@ public class HttpGetter {
 		String url = "http://www.google.com/";
 		System.out.println(url);
 		Assert.assertNotNull(getHtml(url)); // a normal 200 return
+		
 		url = "http://blacklee.net/?page_id=2";
 		System.out.println(url);
 		Assert.assertNotNull(getHtml(url)); // 301 redirect to url below
+		
 		url = "http://blog.blacklee.net/?page_id=2";
 		System.out.println(url);
 		Assert.assertNotNull(getHtml(url)); // this will cause 302 redirect
+		
 		url = "http://www.google.com/abcdefg";
 		System.out.println(url);
 		Assert.assertNotNull(getHtml(url)); // 404, but still have content
+		
 		url = "http://blog.blacklee.net/uploads/500-sample.php";
 		System.out.println(url);
 		Assert.assertNotNull(getHtml(url)); // 500 internal error.

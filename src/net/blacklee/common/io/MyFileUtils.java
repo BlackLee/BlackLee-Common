@@ -15,6 +15,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses(value = {})
 public class MyFileUtils {
 	/**
+	 * Get the extension of a file, without dot symbol.
 	 * @param f this file can be not exist.
 	 * @return file name if file has no extension
 	 * @throws IllegalArgumentException if param f is a directory.

@@ -35,21 +35,22 @@ public class DateUtils {
 		org.apache.commons.lang.time.DateUtils.MILLIS_PER_HOUR,
 		org.apache.commons.lang.time.DateUtils.MILLIS_PER_DAY
 	};
-	private static final String[] unitStrs = new String[]{
+	private static final String[] cnstrUnit = new String[]{
 		"秒",
 		"分",
 		"时",
 		"天",//日?
 	};
 	/**
+	 * Just for Chinese string [前]
 	 * @param str 30分钟前,1天前,22小时前
-	 * @return
+	 * @return the parsed date 
 	 */
-	public static Date getDateFromSometimeBeforeStr(String str) {
+	public static Date getDateFromSometimeBeforeCnstr(String str) {
 		long time = System.currentTimeMillis();
 		int val = Integer.parseInt(str.replaceAll("\\D", ""));
-		for (int i = 0; i < unitStrs.length; i++) {
-			if (str.contains(unitStrs[i])) {
+		for (int i = 0; i < cnstrUnit.length; i++) {
+			if (str.contains(cnstrUnit[i])) {
 				time = time - val * millis[i];
 				break;
 			}
@@ -60,15 +61,15 @@ public class DateUtils {
 	@Test
 	public void testGetDateFromSometimeBeforeStr() {
 		Date yestoday = new Date(System.currentTimeMillis() - 86400000);
-		Date expectYestoday = getDateFromSometimeBeforeStr("1天前");
+		Date expectYestoday = getDateFromSometimeBeforeCnstr("1天前");
 		Assert.assertEquals(DateFormatter.toYyyyMmddHHmmss(yestoday), DateFormatter.toYyyyMmddHHmmss(expectYestoday));
 		
 		Date lastHour = new Date(System.currentTimeMillis() - 3600000);
-		Date expectLastHour = getDateFromSometimeBeforeStr("1小时前");
+		Date expectLastHour = getDateFromSometimeBeforeCnstr("1小时前");
 		Assert.assertEquals(DateFormatter.toYyyyMmddHHmmss(lastHour), DateFormatter.toYyyyMmddHHmmss(expectLastHour));
 		
 		Date lastMinute = new Date(System.currentTimeMillis() - 60000);
-		Date expectLastMinute = getDateFromSometimeBeforeStr("1分钟前");
+		Date expectLastMinute = getDateFromSometimeBeforeCnstr("1分钟前");
 		Assert.assertEquals(DateFormatter.toYyyyMmddHHmmss(lastMinute), DateFormatter.toYyyyMmddHHmmss(expectLastMinute));
 		
 		System.out.println("当前点：  \t" + DateFormatter.toYyyyMmddHHmmss(new Date()));

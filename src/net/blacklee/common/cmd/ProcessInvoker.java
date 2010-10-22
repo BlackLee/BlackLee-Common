@@ -14,10 +14,11 @@ import org.junit.Test;
 import org.junit.runners.Suite.SuiteClasses;
 
 import net.blacklee.common.io.OSUtils;
-import net.blacklee.common.string.MyStringUtils;
+import static net.blacklee.common.string.MyStringUtils.*;
 
 /**
- * @author lihr
+ * A simple Process invoker, receive [command info], and return ProcessExecuteResult contains result information.
+ * @author LiHuiRong
  * @created Oct 18, 2010 3:14:42 PM
  */
 @SuiteClasses(value = {})
@@ -25,13 +26,10 @@ public class ProcessInvoker {
 	
 	private static final Logger log = Logger.getLogger(ProcessInvoker.class);
 	
-	public ProcessExecuteResult invoke(String directory, String cmd, String... args) throws IOException, InterruptedException {
-		return invokeAtBackground(directory, cmd, 0, args);
-	}
-	private Process startProcess(String directory, String cmd, String... args)
-			throws IOException {
+	private Process startProcess(String directory, String cmd, String... args) throws IOException {
 		ProcessBuilder pb = new ProcessBuilder();
-		if (StringUtils.isNotBlank(directory)) pb.directory(new File(directory));
+		if (StringUtils.isNotBlank(directory))
+			pb.directory(new File(directory));
 		List<String> commands = new ArrayList<String>();
 		commands.add(cmd);
 		for (String str : args) {
@@ -42,23 +40,31 @@ public class ProcessInvoker {
 		Process proc = pb.start();
 		return proc;
 	}
-	public ProcessExecuteResult invokeAtBackground(String directory, String cmd, long sleepMilliSeconds, String... args) throws IOException, InterruptedException {
+
+	/**
+	 * Invoke a process, hold on current thread. 
+	 * @param directory command execute directory
+	 * @param cmd command name
+	 * @param args arguments of the command
+	 * @return result information, includes contents of StandOutputStream and StandErrorOutputStream
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public ProcessExecuteResult invoke(String directory, String cmd, String... args)
+	        throws IOException, InterruptedException {
 		Process proc = startProcess(directory, cmd, args);
 		int value = proc.waitFor();
 		int exitValue = proc.exitValue();
 		InputStream inputStream = proc.getInputStream();
 		InputStream errorStream = proc.getErrorStream();
-		if (sleepMilliSeconds > 0) {
-			Thread.sleep(sleepMilliSeconds);
-		}
-		String standardString = MyStringUtils.readStringFromInputStream(inputStream, Charset.defaultCharset().displayName());
-		String errorString = MyStringUtils.readStringFromInputStream(errorStream, Charset.defaultCharset().displayName());
+		String standardString = readStringFromInputStream(inputStream, Charset.defaultCharset().displayName());
+		String errorString = readStringFromInputStream(errorStream, Charset.defaultCharset().displayName());
 		ProcessExecuteResult result = new ProcessExecuteResult(value, exitValue, standardString, errorString);
 		return result;
 	}
 	
 	@Test
-	public void testInvode () {
+	public void testInvode() {
 		try {
 			String str = "abcde";
 			ProcessExecuteResult result;

@@ -1,7 +1,7 @@
 package net.blacklee.common.cmd;
 
-
 /**
+ * A simple bean class.
  * @author lihr
  * @created Oct 18, 2010 3:34:56 PM
  */
