@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runners.Suite.SuiteClasses;
 
 import net.blacklee.common.string.MyStringUtils;
 
@@ -16,6 +19,7 @@ import net.blacklee.common.string.MyStringUtils;
  * @author lihr
  * @created Oct 18, 2010 3:14:42 PM
  */
+@SuiteClasses(value = {})
 public class ProcessInvoker {
 	
 	private static final Logger log = Logger.getLogger(ProcessInvoker.class);
@@ -51,8 +55,17 @@ public class ProcessInvoker {
 		ProcessExecuteResult result = new ProcessExecuteResult(value, exitValue, standardString, errorString);
 		return result;
 	}
-	public static void main(String[] args) throws Exception {
-		ProcessInvoker pi = new ProcessInvoker();
-		pi.invoke(null, "sleep", "10");
+	
+	@Test
+	public void testInvode () {
+		try {
+			String str = "abcde";
+			ProcessExecuteResult result = invoke(null, "cmd", "/C", "echo", str);
+			Assert.assertEquals(str, result.getStandardOutput().trim());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
