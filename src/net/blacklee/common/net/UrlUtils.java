@@ -48,7 +48,7 @@ public class UrlUtils {
 		return url;
 	}
 	
-	@Test
+	@Test (expected = (IllegalArgumentException.class))
 	public void testGetHttpRealLink() {
 		String expected = "http://blog.blacklee.net/tech/page/2";
 		String currentAddr = "http://blog.blacklee.net/tech/page/1";
@@ -56,6 +56,8 @@ public class UrlUtils {
 		assertEquals(expected, getHttpRealLink(currentAddr, "2"));
 		assertEquals(expected, getHttpRealLink(currentAddr, "/tech/page/2"));
 		assertEquals(expected, getHttpRealLink(currentAddr, "http://blog.blacklee.net/tech/page/2"));
+		assertEquals(expected, getHttpRealLink("exception", "aa"));
+		assertEquals(expected, getHttpRealLink(currentAddr, "javascript:void(0)"));
 	}
 	
 	/**

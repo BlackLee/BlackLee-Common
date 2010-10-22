@@ -9,12 +9,14 @@ import java.nio.charset.Charset;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * named MyStringUtils, different from apache-commons-lang.StringUtils
  * @author LiHuiRong
  * Sep 26, 2010 5:26:28 PM
  */
+@SuiteClasses(value = {})
 public class MyStringUtils {
 	/**
 	 * @param arr1

@@ -1,6 +1,7 @@
 package net.blacklee.common.net.http;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,12 +12,11 @@ import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
  * @author lihr
  * Oct 20, 2010 10:59:19 AM
  */
 public class HttpResponseUtils {
-	private static String defaultCharset = "ISO-8859-1";
+	private static String defaultCharset = Charset.defaultCharset().displayName();
 	private static final Pattern pattern = Pattern.compile("<meta.*content=['\" ].*\\Wcharset=(.*?)[\"'; ].*>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 	public static String getResponseHtml(HttpMethodBase method) throws IOException {
 		String charset = null;
