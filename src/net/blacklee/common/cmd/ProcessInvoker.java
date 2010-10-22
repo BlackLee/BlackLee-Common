@@ -14,7 +14,7 @@ import net.blacklee.common.string.MyStringUtils;
 
 /**
  * @author lihr
- * Oct 18, 2010 3:14:42 PM
+ * @created Oct 18, 2010 3:14:42 PM
  */
 public class ProcessInvoker {
 	

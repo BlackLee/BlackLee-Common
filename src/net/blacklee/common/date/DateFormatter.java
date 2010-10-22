@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * and use FastDateFormat to format Date.
  * due to thread-unsafe problem
  * @author LiHuiRong
- * Sep 26, 2010 5:26:19 PM
+ * @created Sep 26, 2010 5:26:19 PM
  */
 @SuiteClasses(value = {})
 public class DateFormatter {

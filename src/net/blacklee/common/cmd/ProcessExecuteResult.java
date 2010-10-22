@@ -3,7 +3,7 @@ package net.blacklee.common.cmd;
 
 /**
  * @author lihr
- * Oct 18, 2010 3:34:56 PM
+ * @created Oct 18, 2010 3:34:56 PM
  */
 public class ProcessExecuteResult {
 	public ProcessExecuteResult() {

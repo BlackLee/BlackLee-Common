@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 /**
  * class to get boot info
  * @author LiHuiRong
- * Sep 28, 2010 9:57:49 AM
+ * @created Sep 28, 2010 9:57:49 AM
  */
 @SuiteClasses(value = {})
 public class BootHelper {

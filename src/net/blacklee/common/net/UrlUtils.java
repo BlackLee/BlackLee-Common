@@ -12,7 +12,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * @author LiHuiRong
- * Sep 27, 2010 3:19:40 PM
+ * @created Sep 27, 2010 3:19:40 PM
  */
 @SuiteClasses(value = {})
 public class UrlUtils {
@@ -27,12 +27,12 @@ public class UrlUtils {
 		if (!validateHttpUrl(currentAddr)) {
 			throw new IllegalArgumentException("currentAddr is wrong, it should be starts with 'http://' or 'https://', but actual is: [" + currentAddr + "]");
 		}
-		if (StringUtils.startsWith(url, "javascript:")) {
+		if (StringUtils.startsWithIgnoreCase(url, "javascript:")) {
 			throw new IllegalArgumentException("this method doesn't handle javascript sytle url: [" + url + "]");
 		}
 		if (StringUtils.isBlank(StringUtils.trim(url))) {
 			url = currentAddr;
-		} else if (url.startsWith("http://") || url.startsWith("https://")) {
+		} else if (StringUtils.startsWithIgnoreCase(url, "http://") || StringUtils.startsWithIgnoreCase(url, "https://")) {
 		} else if (url.startsWith("/")) {
 			url = getProtocalFromUrl(currentAddr) + "://" + getHostFromUrl(currentAddr) + url;
 		} else if (url.startsWith("..")) {
@@ -48,7 +48,7 @@ public class UrlUtils {
 		return url;
 	}
 	
-	@Test (expected = (IllegalArgumentException.class))
+	@Test (expected = IllegalArgumentException.class)
 	public void testGetHttpRealLink() {
 		String expected = "http://blog.blacklee.net/tech/page/2";
 		String currentAddr = "http://blog.blacklee.net/tech/page/1";

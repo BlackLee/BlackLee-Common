@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 /**
  * calculate date
  * @author LiHuiRong
- * Sep 30, 2010 9:26:55 AM
+ * @created Sep 30, 2010 9:26:55 AM
  */
 @SuiteClasses(value = {})
 public class DateUtils {
@@ -29,14 +29,11 @@ public class DateUtils {
 		return getIntegerTimestamp(new Date());
 	}
 	
-	/**
-	 * TODO switch to apache-commons-lang is better. @see DateUtils in commons-lang pgk.
-	 */
-	private static final int[] millis = new int[]{
-		1000, // 1 second
-		1000 * 60, // 1 minute
-		1000 * 60 * 60, // 1 hour
-		1000 * 60 * 60 * 24 // 1 day
+	private static final long[] millis = new long[]{
+		org.apache.commons.lang.time.DateUtils.MILLIS_PER_SECOND,
+		org.apache.commons.lang.time.DateUtils.MILLIS_PER_MINUTE,
+		org.apache.commons.lang.time.DateUtils.MILLIS_PER_HOUR,
+		org.apache.commons.lang.time.DateUtils.MILLIS_PER_DAY
 	};
 	private static final String[] unitStrs = new String[]{
 		"秒",

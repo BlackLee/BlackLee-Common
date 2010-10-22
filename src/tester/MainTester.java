@@ -5,6 +5,8 @@ import net.blacklee.common.date.DateFormatter;
 import net.blacklee.common.date.DateUtils;
 import net.blacklee.common.io.MyFileUtils;
 import net.blacklee.common.net.UrlUtils;
+import net.blacklee.common.net.http.HttpGetter;
+import net.blacklee.common.net.http.HttpResponseUtils;
 import net.blacklee.common.string.MyStringUtils;
 
 import org.junit.runner.RunWith;
@@ -17,7 +19,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={UrlUtils.class, DateFormatter.class, DateUtils.class, 
-		BootHelper.class, MyStringUtils.class, MyFileUtils.class})
+		BootHelper.class, MyStringUtils.class, MyFileUtils.class, HttpGetter.class,
+		HttpResponseUtils.class})
 public class MainTester {
 
 }

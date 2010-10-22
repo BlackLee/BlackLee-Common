@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 /**
  * named MyFileUtils, different from apache-commons-io.FileUtils
  * @author LiHuiRong
- * 2010-10-21 09:04:16
+ * @created 2010-10-21 09:04:16
  */
 @SuiteClasses(value = {})
 public class MyFileUtils {
