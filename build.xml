@@ -1,0 +1,105 @@
+
+<project name="BlackLee-Common" default="dist" basedir=".">
+
+  <property name="app.version"   value="0.1"/>
+
+  <property name="app.name"      value="blacklee-common"/>
+  <property name="build.home"    value="${basedir}/build"/>
+  <property name="dist.home"     value="${basedir}/dist"/>
+  <property name="src.home"      value="${basedir}/src"/>
+  <property name="lib.home"      value="${basedir}/lib"/>
+
+  <property name="compile.debug"       value="true"/>
+  <property name="compile.deprecation" value="false"/>
+  <property name="compile.optimize"    value="true"/>
+
+
+  <path id="compile.classpath">
+    <fileset dir="${lib.home}">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+
+
+  <target name="all" depends="clean,compile"
+   description="Clean build and dist directories, then compile"/>
+
+  <target name="clean"
+   description="Delete old build and dist directories">
+    <delete dir="${build.home}"/>
+    <delete dir="${dist.home}"/>
+  </target>
+
+
+  <target name="compile" depends="prepare"
+   description="Compile Java sources">
+
+    <!-- Compile Java classes as necessary -->
+    <mkdir dir="${build.home}/classes"/>
+    <javac srcdir="${src.home}" destdir="${build.home}/classes" 
+		encoding="UTF-8" debug="${compile.debug}"
+      deprecation="${compile.deprecation}" optimize="${compile.optimize}" >
+        <classpath refid="compile.classpath"/>
+    </javac>
+    <!-- Copy application resources -->
+    <copy  todir="${build.home}/classes">
+      <fileset dir="${src.home}" excludes="**/*.java"/>
+    </copy>
+
+  </target>
+
+  <target name="build" depends="compile" description="build runable app">
+  	<mkdir    dir="${build.home}/lib"/>
+  	
+  	<copy todir="${build.home}/lib">
+		<fileset dir="${lib.home}" excludes="**/.svn*"></fileset>
+  	</copy>
+	
+  	<copy todir="${build.home}/classes">
+		<fileset dir="${src.home}" excludes="**/.svn*"></fileset>
+  	</copy>
+		
+  </target>
+	
+  <target name="dist" depends="build" description="Create binary distribution">
+
+    <!-- Copy additional files to ${dist.home} as necessary -->
+	<!--
+  	<mkdir dir="${dist.home}/"/>
+        <tar destfile="${dist.home}/${app.name}.jar" compression="gzip">
+        <fileset dir="${build.home}">
+            <include name="**"/>
+        </fileset>
+    </tar>
+    -->
+  	<mkdir dir="${dist.home}/"/>
+  	<delete file="${dist.home}/${app.name}-${app.version}.jar" />
+  	<jar destfile="${dist.home}/${app.name}-${app.version}.jar"
+  		basedir="${build.home}/classes">
+  	</jar>
+  	<delete dir="${build.home}"></delete>
+  </target>	
+
+
+<!-- ==================== Prepare Target ================================== -->
+
+<!--
+
+  The "prepare" target is used to create the "build" destination directory,
+  and copy the static contents of your web application to it.  If you need
+  to copy static files from external dependencies, you can customize the
+  contents of this task.
+
+  Normally, this task is executed indirectly when needed.
+
+-->
+
+  <target name="prepare" depends="clean">
+
+    <!-- Create build directories as needed -->
+    <mkdir  dir="${build.home}"/>
+	
+  </target>
+
+
+</project>
