@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runners.Suite.SuiteClasses;
@@ -25,22 +25,39 @@ public class HttpGetter {
 	 * @return html content
 	 */
 	public static String getHtml(String url) {
-		GetMethod getter = new GetMethod(url);
-		getter.addRequestHeader("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2");
-		getter.setFollowRedirects(true);
-		int status = -1;
+		HttpGet getter = new HttpGet(url);
+		getter.addHeader("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2");
 		try {
-			status = new HttpClient().executeMethod(getter);
+			HttpResponse resp = new DefaultHttpClient().execute(getter);
+			int status = resp.getStatusLine().getStatusCode();
 //			if (status == HttpStatus.SC_OK) {
 			if (!noBodyStatus.contains(status)) {
-				return HttpResponseUtils.getResponseHtml(getter);
+				return HttpResponseUtils.getResponseHtml(resp);
 			}
-		} catch (HttpException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			getter.releaseConnection();
+		}
+		return null;
+	}
+	
+	/**
+	 * If you tell me the charset, I'll work better.
+	 * @param url target url
+	 * @param charset charset of server's response
+	 * @return html content
+	 */
+	public static String getHtml(String url, String charset) {
+		HttpGet getter = new HttpGet(url);
+		getter.addHeader("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2");
+		try {
+			HttpResponse httpResp = new DefaultHttpClient().execute(getter);
+			if (!noBodyStatus.contains(httpResp.getStatusLine().getStatusCode())) {
+				return HttpResponseUtils.getResponseHtml(httpResp, charset);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
 		}
 		return null;
 	}
@@ -49,22 +66,39 @@ public class HttpGetter {
 	public void testGetHtml() {
 		String url = "http://www.google.com/";
 		System.out.println(url);
-		Assert.assertNotNull(getHtml(url)); // a normal 200 return
+		String html = getHtml(url);
+		System.out.println(html);
+		Assert.assertNotNull(html); // a normal 200 return
 		
 		url = "http://blacklee.net/?page_id=2";
 		System.out.println(url);
-		Assert.assertNotNull(getHtml(url)); // 301 redirect to url below
+		html = getHtml(url);
+		System.out.println(html);
+		Assert.assertNotNull(html); // 301 redirect to url below
 		
 		url = "http://blog.blacklee.net/?page_id=2";
 		System.out.println(url);
-		Assert.assertNotNull(getHtml(url)); // this will cause 302 redirect
+		html = getHtml(url);
+		System.out.println(html);
+		Assert.assertNotNull(html); // this will cause 302 redirect
 		
 		url = "http://www.google.com/abcdefg";
 		System.out.println(url);
-		Assert.assertNotNull(getHtml(url)); // 404, but still have content
+		html = getHtml(url);
+		System.out.println(html);
+		Assert.assertNotNull(html); // 404, but still have content
 		
-		url = "http://blog.blacklee.net/uploads/500-sample.php";
+		url = "http://blog.blacklee.net/uploads/php/500-sample.php";
 		System.out.println(url);
-		Assert.assertNotNull(getHtml(url)); // 500 internal error.
+		html = getHtml(url);
+		System.out.println(html);
+		Assert.assertNotNull(html); // 500 internal error.
+		
+
+		url = "http://www.google.com.hk/search?hl=zh-CN&safe=strict&client=firefox-a&hs=sK3&q=%E8%89%BA%E6%9C%AF%E4%BA%BA%E7%94%9F+%E8%A3%85%E9%80%BC";
+		System.out.println(url);
+		html = getHtml(url);
+		System.out.println(html);
+		Assert.assertNotNull(html); 
 	}
 }

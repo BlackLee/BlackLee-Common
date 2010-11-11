@@ -35,4 +35,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		OSUtils.class
 		})
 public class MainTester {
+	public static void main(String[] args) {
+	    System.out.println("Hello Guys~~");
+    }
 }

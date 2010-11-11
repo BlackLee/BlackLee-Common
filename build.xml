@@ -1,7 +1,7 @@
 
 <project name="BlackLee-Common" default="dist" basedir=".">
 
-  <property name="app.version"   value="0.1"/>
+  <property name="app.version"   value="0.2"/>
 
   <property name="app.name"      value="blacklee-common"/>
   <property name="build.home"    value="${basedir}/build"/>

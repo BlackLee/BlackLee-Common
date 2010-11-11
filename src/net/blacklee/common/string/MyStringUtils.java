@@ -1,7 +1,9 @@
 package net.blacklee.common.string;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
@@ -52,14 +54,30 @@ public class MyStringUtils {
 	 * @throws IOException
 	 */
 	public static String readStringFromInputStream(InputStream input, String charset) throws IOException {
-		if (StringUtils.isBlank(charset) || !Charset.isSupported(charset))
-			charset = Charset.defaultCharset().displayName();
+		Charset cs = null;
+		if (Charset.isSupported(charset))
+			cs = Charset.forName(charset);
+		else 
+			cs = Charset.defaultCharset();
+		return readStringFromInputStream(input, cs);
+	}
+	
+	/**
+	 * Read String content from InputStream, like HttpResponseStream, FileInputStream...
+	 * @param input an InputStream
+	 * @param cs use Charset.defaultCharset() if error occurs.
+	 * @return String content
+	 * @throws IOException
+	 */
+	public static String readStringFromInputStream(InputStream input, Charset cs) throws IOException {
+		if (cs == null)
+			cs = Charset.defaultCharset();
 		StringBuffer sb = new StringBuffer();
-		byte[] bs = new byte[128];
-		int len = -1;
-		while ((len = input.read(bs)) >= 0) {
-			sb.append(new String(bs, 0, len, charset));
-		}
+		BufferedReader br = new BufferedReader(new InputStreamReader(input, cs));
+		String line = null;
+		while ((line = br.readLine()) != null) sb.append(line).append('\n');
+		sb.setLength(sb.length() - 1);
+		br.close();
 		input.close();
 		return sb.toString();
 	}

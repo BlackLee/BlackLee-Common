@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.commons.lang.time.FastDateFormat;
 import org.junit.Test;
@@ -27,6 +28,29 @@ public class DateFormatter {
 		return FastDateFormat.getInstance(pattern).format(date);
 	}
 	
+	public static final String toStringWithPattern(Date date, String pattern, Locale loc) {
+		return FastDateFormat.getInstance(pattern, loc).format(date);
+	}
+	
+	/**
+	 * If you have several patterns and don't sure which to use, maybe you'd better change to
+	 * <code>org.apache.commons.lang.time.DateUtils.parseDate(String str, String[] parsePatterns)</code>
+	 * @see org.apache.commons.lang.time.DateUtils.parseDate(String str, String[] parsePatterns)
+	 * @param src string source
+	 * @param pattern pattern of the source
+	 * @param loc Locale, use default if null
+	 * @return a date
+	 * @throws IllegalArgumentException if two arguments don't map.
+	 */
+	public static final Date parse(String src, String pattern, Locale loc) {
+		try {
+			if (loc == null) loc = Locale.getDefault();
+	        return new SimpleDateFormat(pattern, loc).parse(src);
+        } catch (ParseException e) {
+	        throw new IllegalArgumentException("try to parse String[" + src + "] to date use Pattern[" + pattern + "]");
+        }
+	}
+	
 	/**
 	 * If you have several patterns and don't sure which to use, maybe you'd better change to
 	 * <code>org.apache.commons.lang.time.DateUtils.parseDate(String str, String[] parsePatterns)</code>
@@ -37,11 +61,7 @@ public class DateFormatter {
 	 * @throws IllegalArgumentException if two arguments don't map.
 	 */
 	public static final Date parse(String src, String pattern) {
-		try {
-	        return new SimpleDateFormat(pattern).parse(src);
-        } catch (ParseException e) {
-	        throw new IllegalArgumentException("try to parse String[" + src + "] to date use Pattern[" + pattern + "]");
-        }
+		return parse(src, pattern, Locale.getDefault());
 	}
 	
 	private static final FastDateFormat mmddHHmmssFormatter = FastDateFormat.getInstance("MM-dd HH:mm:ss");
@@ -83,5 +103,11 @@ public class DateFormatter {
 	public static String toYyyyMmddHHmmss(Date date) {
 		return date != null ? yyyyMmddHHmmssFormatter.format(date) : "";
 	}
+
+	private static final FastDateFormat yyyyMmddFormatter = FastDateFormat.getInstance("yyyy-MM-dd");
+	public static String toYyyyMmdd(Date date) {
+		if (date == null) return "";
+	    return yyyyMmddFormatter.format(date);
+    }
 	
 }
