@@ -9,16 +9,12 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * named MyStringUtils, different from apache-commons-lang.StringUtils
  * @author LiHuiRong 
  * @created Sep 26, 2010 5:26:28 PM
  */
-@SuiteClasses(value = {})
 public class MyStringUtils {
 	/**
 	 * Merge String arrays
@@ -36,14 +32,6 @@ public class MyStringUtils {
 		System.arraycopy(arr1, 0, dest, 0, arr1.length);
 		System.arraycopy(arr2, 0, dest, arr1.length, arr2.length);
 		return dest;
-	}
-	
-	@Test
-	public void testMerge() {
-		String[] a1 = new String[] { "1", "2" };
-		String[] a2 = new String[] { "3", "4", "5" };
-		String[] a3 = merge(a1, a2);
-		Assert.assertEquals("1,2,3,4,5", StringUtils.join(a3, ","));
 	}
 	
 	/**
@@ -76,7 +64,7 @@ public class MyStringUtils {
 		BufferedReader br = new BufferedReader(new InputStreamReader(input, cs));
 		String line = null;
 		while ((line = br.readLine()) != null) sb.append(line).append('\n');
-		sb.setLength(sb.length() - 1);
+		if (sb.length() > 0) sb.setLength(sb.length() - 1);
 		br.close();
 		input.close();
 		return sb.toString();

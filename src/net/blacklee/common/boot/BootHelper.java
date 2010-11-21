@@ -1,15 +1,10 @@
 package net.blacklee.common.boot;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runners.Suite.SuiteClasses;
-
 /**
  * class to get boot info
  * @author LiHuiRong
  * @created Sep 28, 2010 9:57:49 AM
  */
-@SuiteClasses(value = {})
 public class BootHelper {
 	/**
 	 * Sometimes we have different strategy to treat development/production environment.
@@ -24,11 +19,6 @@ public class BootHelper {
 			if (stacks[stacks.length - 1].getClassName().contains("junit")) yes = true;
 		}
 		return yes;
-	}
-	
-	@Test
-	public void testBootFromJUnit() {
-		Assert.assertTrue(bootFromJunit());
 	}
 	
 //	/**

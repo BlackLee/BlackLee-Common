@@ -1,21 +1,15 @@
 package net.blacklee.common.net;
 
 import java.util.regex.Matcher;
-
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Assert;
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * Some methods are only suit for HTTP protocol.
  * @author LiHuiRong
- * @created 2010-10-22 下午04:38:38
+ * @created 2010-10-22 16:38:38
  */
-@SuiteClasses(value = {})
 public class UrlUtils {
 	/**
 	 * When crawled a page, parse the a tag, will get links, but these links have many styles, thie method will
@@ -54,19 +48,6 @@ public class UrlUtils {
 			return getHttpRealLink(currentAddr, url);
 		}
 		return url;
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
-	public void testGetHttpRealLink() {
-		String expected = "http://blog.blacklee.net/tech/page/2";
-		String currentAddr = "http://blog.blacklee.net/tech/page/1";
-		assertEquals(expected, getHttpRealLink(currentAddr, "../2"));
-		assertEquals("http://blog.blacklee.net/misc", getHttpRealLink(currentAddr, "../../../misc"));
-		assertEquals(expected, getHttpRealLink(currentAddr, "2"));
-		assertEquals(expected, getHttpRealLink(currentAddr, "/tech/page/2"));
-		assertEquals(expected, getHttpRealLink(currentAddr, "http://blog.blacklee.net/tech/page/2"));
-		assertEquals(expected, getHttpRealLink("exception", "aa"));
-		assertEquals(expected, getHttpRealLink(currentAddr, "javascript:void(0)"));
 	}
 	
 	/**
@@ -122,18 +103,5 @@ public class UrlUtils {
 			protocol = StringUtils.substring(url, 0, url.indexOf(':'));
 		}
 		return protocol;
-	}
-	
-	@Test
-	public void testGetHostStr() {
-		String url = "http://mail.google.com/";
-		String host = "mail.google.com";
-		Assert.assertEquals(host, getHostFromUrl(url));
-		url = "https://mail.google.com/";
-		Assert.assertEquals(host, getHostFromUrl(url));
-		url = "https://mail.google.com/mail";
-		Assert.assertEquals(host, getHostFromUrl(url));
-		url = "http://mail.google.com";
-		Assert.assertEquals(host, getHostFromUrl(url));
 	}
 }
