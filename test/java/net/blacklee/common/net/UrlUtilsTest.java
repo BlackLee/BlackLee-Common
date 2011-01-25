@@ -34,5 +34,11 @@ public class UrlUtilsTest {
 		url = "http://mail.google.com";
 		Assert.assertEquals(host, UrlUtils.getHostFromUrl(url));
 	}
+	
+	@Test
+	public void testGetParam() {
+		String qs = "wd=%CD%F8%D5%BE%C1%F7%C1%BF%CD%B3%BC%C6&rsp=0&oq=%C1%F7%C1%BF%CD%B3%BC%C6&f=1";
+		System.out.println(UrlUtils.getParamFromQueryString(qs, "wd"));
+	}
 
 }

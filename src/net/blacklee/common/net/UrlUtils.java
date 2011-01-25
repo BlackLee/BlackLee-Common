@@ -1,5 +1,7 @@
 package net.blacklee.common.net;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +13,33 @@ import org.apache.commons.lang.StringUtils;
  * @created 2010-10-22 16:38:38
  */
 public class UrlUtils {
+	
+	private static Map<String, Map<String, String>> cache = new HashMap<String, Map<String,String>>();
+	/**
+	 * simulate ServletRequest.getParameter(String name), doesn't implement ServletRequest.getParameterValues(String name)
+	 * here using a simple HashMap cache
+	 * @param queryString
+	 * @param key
+	 * @return a String representing the single value of the queryString
+	 */
+	public static String getParamFromQueryString(String queryString, String key) {
+		if (StringUtils.isBlank(queryString)) return null;
+		Map<String, String> qss = cache.get(queryString);
+		if (qss == null) {
+			qss = new HashMap<String, String>();
+			String[] qss1 = queryString.split("&");
+			for (String pair : qss1) {
+				if (pair.indexOf('=') > 0) {
+					qss.put(pair.substring(0, pair.indexOf('=')), pair.substring(pair.indexOf('=') + 1));
+				} else {
+					qss.put(pair, null);
+				}
+	        }
+			cache.put(queryString, qss);
+		}
+		return qss.get(key);
+	}
+	
 	/**
 	 * When crawled a page, parse the a tag, will get links, but these links have many styles, thie method will
 	 * transform these links to absolute URL. Don't input javascript to test me, thx.
@@ -58,7 +87,7 @@ public class UrlUtils {
 	public static boolean validateHttpUrl(String url) {
 		if (StringUtils.isBlank(url))
 			return false;
-		if (StringUtils.startsWithIgnoreCase(url, "http://") || StringUtils.startsWithIgnoreCase(url, "https://"))
+		if (StringUtils.startsWithIgnoreCase(url, "http://") || StringUtils.startsWithIgnoreCase(url, "https://") && url.indexOf('/', 8) > 0)
 			return true;
 		return false;
 	}

@@ -1,5 +1,8 @@
 package net.blacklee.common.string;
 
+import java.nio.charset.Charset;
+
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.StringEncoder;
 import org.apache.commons.codec.net.URLCodec;
@@ -27,6 +30,30 @@ public class UrlStringCodecUtils {
 			log.error("encode [" + src + "] to " + charset + " error... " + e.getMessage());
 			return src;
 		}
+	}
+
+	/**
+	 * decode string with the specify Charset
+	 * @param src string to be decoded
+	 * @param charset target charset
+	 * @return decoded string
+	 */
+	public static String decodeURL(String src, String charset) {
+		try {
+	        return new URLCodec(charset).decode(src);
+        } catch (DecoderException e) {
+			log.error("decode [" + src + "] by " + charset + " error... " + e.getMessage());
+			return src;
+        }
+	}
+
+	/**
+	 * decode string with System Default Charset
+	 * @param src string to be decoded
+	 * @return decoded string
+	 */
+	public static String decodeURL(String src) {
+		return decodeURL(src, Charset.defaultCharset().displayName());
 	}
 	
 	private static StringEncoder utf8Encoder = new URLCodec();

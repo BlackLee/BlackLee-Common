@@ -28,4 +28,10 @@ public class DateUtilsTest {
 		System.out.println("1小时前：\t" + DateFormatter.toYyyyMmddHHmmss(expectLastHour));
 		System.out.println("1分钟前：\t" + DateFormatter.toYyyyMmddHHmmss(expectLastMinute));
 	}
+	
+	@Test
+	public void testBeginningOfTheDay() {
+		Date d = DateUtils.beginningOfTheDay(new Date());
+		Assert.assertEquals(DateFormatter.toYyyyMmdd(new Date()) + " 00:00:00", DateFormatter.toYyyyMmddHHmmss(d));
+	}
 }

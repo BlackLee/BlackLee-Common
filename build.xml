@@ -57,6 +57,7 @@
 	
   	<copy todir="${build.home}/classes">
 		<fileset dir="${src.home}" excludes="**/.svn*"></fileset>
+		<fileset dir="${src.home}" excludes="log4j.xml"></fileset>
   	</copy>
 		
   </target>
@@ -74,6 +75,7 @@
     -->
   	<mkdir dir="${dist.home}/"/>
   	<delete file="${dist.home}/${app.name}-${app.version}.jar" />
+  	<delete file="${build.home}/classes/log4j.xml"></delete>
   	<jar destfile="${dist.home}/${app.name}-${app.version}.jar"
   		basedir="${build.home}/classes">
   	</jar>

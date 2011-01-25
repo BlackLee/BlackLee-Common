@@ -1,5 +1,6 @@
 package net.blacklee.common.date;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -51,5 +52,20 @@ public class DateUtils {
 			}
 		}
 		return new Date(time);
+	}
+	
+	/**
+	 * @param date a date with value of yyyy-MM-dd HH:mm:ss
+	 * @return a date with value of yyyy-MM-dd 00:00:00
+	 */
+	public static Date beginningOfTheDay(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		date.setTime(c.getTimeInMillis());
+		return date;
 	}
 }

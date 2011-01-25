@@ -62,11 +62,10 @@ public class StringPatternWrapper {
 					BeanUtils.setProperty(bean, prop, value);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
 				throw new RuntimeException("set property wrong: " + cls + "." + prop + " = " + value);
 			}
 		} else {
-			log.error("Pattern:[" + pattern.pattern() + "] not match [" + src + "]");
+//			log.warn("Pattern:[" + pattern.pattern() + "] not match [" + src + "]");
 			throw new IllegalArgumentException("Pattern:[" + pattern.pattern() + "] not match [" + src + "]");
 		}
 	}

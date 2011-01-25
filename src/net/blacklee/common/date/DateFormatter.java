@@ -14,7 +14,7 @@ import org.apache.commons.lang.time.FastDateFormat;
  * @created Sep 26, 2010 5:26:19 PM
  */
 public class DateFormatter {
-	
+	                                             
 	/**
 	 * If the pattern is defined by user in configuration file, this method is useful.
 	 */
@@ -76,6 +76,13 @@ public class DateFormatter {
 	        return yyyyMmddHHmmssParser.parse(src);
         }
 	}
+
+	private static final SimpleDateFormat yyyyMmddParser = new SimpleDateFormat("yyyy-MM-dd");
+	public static Date fromYyyyMmdd(String strDate) throws ParseException {
+		synchronized (yyyyMmddParser) {
+	        return yyyyMmddParser.parse(strDate);
+        }
+    }
 	
 	private static final FastDateFormat yyyyMmddHHmmssFormatter = FastDateFormat.getInstance("yyyy-MM-dd HH:mm:ss");
 	public static String toYyyyMmddHHmmss(Date date) {

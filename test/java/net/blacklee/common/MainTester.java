@@ -6,6 +6,7 @@ import net.blacklee.common.date.DateFormatterTest;
 import net.blacklee.common.date.DateUtilsTest;
 import net.blacklee.common.io.MyFileUtilsTest;
 import net.blacklee.common.io.OSUtilsTest;
+import net.blacklee.common.math.MyNumberUtilsTest;
 import net.blacklee.common.net.UrlUtilsTest;
 import net.blacklee.common.net.http.HttpGetterTest;
 import net.blacklee.common.net.http.HttpResponseUtilsTest;
@@ -27,9 +28,10 @@ import org.junit.runners.Suite.SuiteClasses;
 		BootHelperTest.class, 
 		MyStringUtilsTest.class, 
 		MyFileUtilsTest.class, 
-		HttpGetterTest.class,
-		HttpResponseUtilsTest.class, 
+//		HttpGetterTest.class,
+//		HttpResponseUtilsTest.class, 
 		ProcessInvokerTest.class, 
+		MyNumberUtilsTest.class,
 		OSUtilsTest.class
 		})
 public class MainTester {
