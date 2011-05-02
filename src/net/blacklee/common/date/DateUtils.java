@@ -68,4 +68,13 @@ public class DateUtils {
 		date.setTime(c.getTimeInMillis());
 		return date;
 	}
+	
+	/**
+	 * @param start
+	 * @param end
+	 * @return days number of (end - start)
+	 */
+	public static int getDayDistanceBetween(Date start, Date end) {
+		return (int) ((end.getTime() - start.getTime()) / 1000 / 86400);
+	}
 }

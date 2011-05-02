@@ -1,6 +1,9 @@
 package net.blacklee.common.string;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,6 +51,10 @@ public class MyStringUtils {
 		else 
 			cs = Charset.defaultCharset();
 		return readStringFromInputStream(input, cs);
+	}
+	
+	public static String readFileContent(File f) throws FileNotFoundException, IOException {
+		return readStringFromInputStream(new FileInputStream(f), "");
 	}
 	
 	/**

@@ -69,4 +69,8 @@ public class StringPatternWrapper {
 			throw new IllegalArgumentException("Pattern:[" + pattern.pattern() + "] not match [" + src + "]");
 		}
 	}
+
+	public Pattern getPattern() {
+    	return pattern;
+    }
 }

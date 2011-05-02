@@ -64,14 +64,16 @@ public class UrlUtils {
 		        || StringUtils.startsWithIgnoreCase(url, "https://")) {
 		} else if (url.startsWith("/")) {
 			url = getProtocolFromUrl(currentAddr) + "://" + getHostFromUrl(currentAddr) + url;
-		} else if (url.startsWith("..")) {
-			while (url.startsWith("..")) {
+		} else if (url.startsWith("../")) {
+			while (url.startsWith("../")) {
 				url = url.substring(3);
 				if (currentAddr.endsWith("/"))
 					currentAddr = currentAddr.replaceFirst("/$", "");
 				currentAddr = currentAddr.substring(0, currentAddr.lastIndexOf('/') + 1);
 			}
 			url = currentAddr + url;
+		} else if (currentAddr.endsWith("/")) {
+		    url = currentAddr + url;
 		} else { // current=http://twitter.com, url=someguy
 			url = "../" + url;
 			return getHttpRealLink(currentAddr, url);

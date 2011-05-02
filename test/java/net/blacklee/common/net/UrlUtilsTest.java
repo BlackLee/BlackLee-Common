@@ -23,6 +23,21 @@ public class UrlUtilsTest {
 	}
 	
 	@Test
+    public void testGetHttpRealLink2() {
+        String expected = "http://blog.blacklee.net/tech/page/2";
+        String currentAddr = "http://blog.blacklee.net/tech/page/1";
+        assertEquals(expected, UrlUtils.getHttpRealLink(currentAddr, "../2"));
+        assertEquals("http://blog.blacklee.net/misc", UrlUtils.getHttpRealLink(currentAddr, "../../../misc"));
+        assertEquals(expected, UrlUtils.getHttpRealLink(currentAddr, "2"));
+        assertEquals(expected, UrlUtils.getHttpRealLink(currentAddr, "/tech/page/2"));
+        assertEquals(expected, UrlUtils.getHttpRealLink(currentAddr, "http://blog.blacklee.net/tech/page/2"));
+        
+        currentAddr = "http://blog.blacklee.net/";
+        assertEquals(expected, UrlUtils.getHttpRealLink(currentAddr, "tech/page/2"));
+        assertEquals("http://www.adpanshi.com/images/pst/program_bualt2.gif", UrlUtils.getHttpRealLink("http://www.adpanshi.com/", "images/pst/program_bualt2.gif"));
+    }
+	
+	@Test
 	public void testGetHostStr() {
 		String url = "http://mail.google.com/";
 		String host = "mail.google.com";
