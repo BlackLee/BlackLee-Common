@@ -11,39 +11,7 @@ public class BootHelper {
 	 * @return true if you're running junit
 	 */
 	public static boolean bootFromJunit() {
-		boolean yes = false;
-		try {
-			throw new Exception();
-		} catch (Exception e) {
-			StackTraceElement[] stacks = e.getStackTrace();
-			if (stacks[stacks.length - 1].getClassName().contains("junit")) yes = true;
-		}
-		return yes;
+		StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+		return stacks[stacks.length - 1].getClassName().contains("junit");
 	}
-	
-//	/**
-//	 * TODO I forget the purpose of writing this method's :-(
-//	 * @param cls
-//	 * @return
-//	 */
-//	public static boolean bootFromOwn(Class<?> cls) {
-//		boolean yes = false;
-//		try {
-//			throw new Exception();
-//		} catch (Exception e) {
-//			StackTraceElement[] stacks = e.getStackTrace();
-//			if (stacks[stacks.length - 1].getClassName().contains(cls.getName())) yes = true;
-//		}
-//		return yes;
-//	}
-//	
-//	public static void main(String[] args) {
-//		System.out.println(bootFromOwn(BootHelper.class));
-//	}
-//	
-//	@Test
-//	public void testB() {
-//		Assert.assertFalse(bootFromOwn(BootHelper.class));
-//	}
-//	
 }
